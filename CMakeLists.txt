@@ -4,4 +4,4 @@ project(jstl)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(jstl
-        test/main.cpp)
+        test/main.cpp function.h type_traits.h utility.h)
