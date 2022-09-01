@@ -11,12 +11,17 @@ void foo(int a, double b) {
   std::cout << a << " " << b << std::endl;
 }
 
+void tuple_cast(jstl::tuple<double, char, std::string> &a) {
+  assert(false);
+}
+
 int main() {
   jstl::tuple<int, double, char, std::string> t{1, 2.1, 'c', "str"};
   assert(jstl::get<0>(t) == 1);
   assert(jstl::get<1>(t) == 2.1);
   assert(jstl::get<2>(t) == 'c');
   assert(jstl::get<3>(t) == "str");
+//  tuple_cast(t);
 
   jstl::function<void(int,double)> f(foo);
   int a = 1;

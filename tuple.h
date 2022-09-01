@@ -19,6 +19,11 @@ namespace jstl {
    *
    * 对象内存结构是先父后子的。因此递归继承导致在 tuple 对象的内存结构中，
    * 变量的存放顺序（变量在对象内存中的地址高低）与实际声明的先后顺序相反
+   *
+   * 注意 tuple 的递归继承需要使用 private 继承，这是为了防止 tuple 产生
+   * 错误的多态函数调用，
+   * 如 void foo(tuple<double>) 被传入 tuple<int, double> 类型的实参，
+   * 因为 public 继承链下，tuple<int, double> 是 tuple<double> 的子类
    */
 
   // tuple 原始版本
@@ -32,7 +37,7 @@ namespace jstl {
   // tuple 的带参偏特化，第一个参数被特化成 this_type 了
   // 递归向下，每次递归确定一个 "this_type val"
   template<typename this_type, typename ...args_type>
-  class tuple<this_type, args_type...> : public tuple<args_type...> {
+  class tuple<this_type, args_type...> : private tuple<args_type...> {
   public:
     // 保存本层的 val，this_type 右边的保存在父类中
     this_type val;
